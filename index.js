@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import authRoutes from './src/Routes/auth.js';
 
 dotenv.config();
 
@@ -32,6 +33,7 @@ const dbConnect = async () => {
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOption));
+app.use("/api/auth", authRoutes)
 
 app.listen(PORT, () => {
   dbConnect(), console.log(`Server listening on PORT ${PORT}`);
