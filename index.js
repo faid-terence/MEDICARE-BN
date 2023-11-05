@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import authRoutes from "./src/Routes/auth.js";
 import userRoutes from "./src/Routes/user.js";
 import doctorRoutes from "./src/Routes/doctor.js";
+import reviewRoutes from "./src/Routes/review.js";
 
 dotenv.config();
 
@@ -38,6 +39,7 @@ app.use(cors(corsOption));
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/doctors", doctorRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 app.listen(PORT, () => {
   dbConnect(), console.log(`Server listening on PORT ${PORT}`);
