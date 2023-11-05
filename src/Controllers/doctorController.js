@@ -2,7 +2,20 @@ import DoctorSchema from "../Models/DoctorSchema.js";
 
 export const findAllDoctors = async (req, res) => {
   try {
-    const doctors = await DoctorSchema.find().select("-password");
+    const { query } = req.query;
+    let doctors;
+    if (query) {
+      doctors = await DoctorSchema.find({
+        isApproved: "approved",
+        $or: [
+          { name: { $regex: query, $options: "i" } },
+          { specialization: { $regex: query, $options: "i" } },
+        ],
+      });
+    }
+    doctors = await DoctorSchema.find({ isApproved: "approved" }).select(
+      "-password"
+    );
     return res.status(200).json({ success: true, doctors });
   } catch (error) {
     console.error(error); // Log the error for debugging
