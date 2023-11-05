@@ -2,7 +2,7 @@ import UserSchema from "../Models/UserSchema.js";
 
 export const findAllUsers = async (req, res) => {
   try {
-    const users = await UserSchema.find();
+    const users = await UserSchema.find().select("-password");
     return res.status(200).json({ success: true, users });
   } catch (error) {
     console.error(error); // Log the error for debugging
@@ -13,7 +13,7 @@ export const findAllUsers = async (req, res) => {
 export const findUserById = async (req, res) => {
   const { id } = req.params;
   try {
-    const user = await UserSchema.findById(id);
+    const user = await UserSchema.findById(id).select("-password");
     if (!user) {
       return res
         .status(404)
