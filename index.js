@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoutes from "./src/Routes/auth.js";
 import userRoutes from "./src/Routes/user.js";
+import doctorRoutes from "./src/Routes/doctor.js";
 
 dotenv.config();
 
@@ -36,6 +37,7 @@ app.use(cookieParser());
 app.use(cors(corsOption));
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/doctors", doctorRoutes);
 
 app.listen(PORT, () => {
   dbConnect(), console.log(`Server listening on PORT ${PORT}`);
