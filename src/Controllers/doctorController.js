@@ -18,7 +18,7 @@ export const findAllDoctors = async (req, res) => {
     );
     return res.status(200).json({ success: true, doctors });
   } catch (error) {
-    console.error(error); // Log the error for debugging
+    console.error(error);
     return res.status(500).json({ success: false, message: "Server Error" });
   }
 };
