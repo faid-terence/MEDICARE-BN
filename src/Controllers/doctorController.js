@@ -26,7 +26,9 @@ export const findAllDoctors = async (req, res) => {
 export const findDoctorById = async (req, res) => {
   const { id } = req.params;
   try {
-    const doctor = await DoctorSchema.findById(id).select("-password");
+    const doctor = await DoctorSchema.findById(id)
+      .populate("reviews")
+      .select("-password");
     if (!doctor) {
       return res
         .status(404)
