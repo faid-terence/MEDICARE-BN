@@ -1,4 +1,5 @@
 import DoctorSchema from "../Models/DoctorSchema.js";
+import BookingSchema from "../Models/BookingSchema.js";
 
 export const findAllDoctors = async (req, res) => {
   try {
@@ -73,5 +74,26 @@ export const deleteDoctor = async (req, res) => {
       .json({ success: true, message: "Doctor Deleted Successful" });
   } catch (error) {
     return res.status(500).json({ success: false, message: "Server Error " });
+  }
+};
+
+export const getDoctorProfile = async (req, res) => {
+  const doctorId = req.doctorId;
+  try {
+    const doctor = await DoctorSchema.findById(doctorId);
+    if (!doctor) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Doctor Not Found" });
+    }
+    const { password, ...rest } = doctor._doc;
+    const appointments = await BookingSchema.find({ doctor: doctorId });
+    return res.status(200).json({
+      success: true,
+      message: "Doctor Profile Available",
+      data: { ...rest, appointments },
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Server ERROR!" });
   }
 };
